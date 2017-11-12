@@ -1,55 +1,193 @@
-class IntList{
-	public static void main(String[] args){
-		/*if(args.length == 0){
-			int l [] = new int[0];
-			int i = 0;
-		}else{
-			int l [] = new int[args.length];
-			int i = 0;
-			for (String s : args){
-				l[i] = Integer.parseInt(s);
-				++i;
-			}
-		}
-		
-		addInd(l, 3, 4);
-		for(int i : l){
-			System.out.printl(i);
-		}*/
-	}
-	//KONSTANSOK
+import java.util.Arrays;
+
+public class IntList{
+	
+	private int list [] = new int[0];
+	private int i;
 	
 	//KONSTRUKTOROK
-	public IntList() {}
-	public IntList(int[] elems) {}
-	
-	public static int[] add(int[] l, int a){
-		l[l.length+1] = a;
-		return l;
+	public IntList (){
+		this.list = new int[0];
 	}
 	
-	public static int[] addInd(int[] l, int a, int ind){
+	public IntList (String[] elems){
+		this.list = new int[elems.length];
+		int j=0;
+		for(String i : elems){
+			this.list[j] = Integer.parseInt(i);
+			++j;
+		}
+	}
+	
+	//GETTEREK
+/*	public static int[] getList(){
+		return list;
+	} */
+	
+	//ELJÁRÁSOK
+	public void add(int elem){
+		/*int newLength = this.list.length +1;
+		int tmp [] = new int[newLength];*/
+		//tmp = list.clone();
+		int[] tmp = Arrays.copyOf(this.list, this.list.length+1);
+		/*System.out.println(elem);
+		System.out.println(newLength);
+		System.out.println(tmp.length);
+		System.out.println(this.list.length);
+		System.out.println(this.list.length+1);*/
+		tmp[tmp.length-1] = elem;
+		this.list = Arrays.copyOf(tmp, tmp.length);
+		/*for(int i = 0; i<this.list.length; ++i){
+			System.out.println(tmp[i]);
+		}*/
+	}
+	
+	public void add(int elem, int index){
+		int[] tmp = Arrays.copyOf(this.list, this.list.length+1);
+		int tmpElem = 0;
+		int sndTmpElem;
+		for(int i=0; i<tmp.length; ++i){
+			if(i == index){
+				tmpElem = tmp[i];
+				tmp[i] = elem;
+			}
+			if(i>index){
+				sndTmpElem = tmp[i];
+				tmp[i] = tmpElem; 
+				tmpElem = sndTmpElem;
+			}
+		}
+		this.list = Arrays.copyOf(tmp, tmp.length);
+		/*for(int i = 0; i<this.list.length; ++i){
+			System.out.println(tmp[i]);
+		}*/
+	}
+	
+	public int size(){
+		return this.list.length;
+	}
+	
+	public int get(){
+		return this.list[0];
+	}
+	
+	public int get(int index){
+		return this.list[index];
+	}
+	
+	public void set(int elem, int index){
+		if((index<this.list.length) && (index > -1)){
+			this.list[index] = elem;
+		}
+	}
+	
+	public void remove(){
+		int tmp[] = new int[this.list.length-1];
+		for(int i = 1; i<this.list.length; ++i){
+			tmp[i-1] = this.list[i];
+		}
+		this.list = Arrays.copyOf(tmp,tmp.length);
+	}
+	
+	public void remove(int index){
+		int[] tmp = new int[this.list.length-1];
 		int j = 0;
-		boolean ok = false;
-		int tmp = 0;
-		
-		for(int i : l){
-			if(ok == false){
-				if(j == ind){
-					ok = true;
-					tmp = i;
-					l[j] = a;
-				}
-				++j;
-			}else{
-				l[j] = tmp;
-				tmp = i;
+		for(int i = 0; i<this.list.length; ++i){
+			if(i !=  index){
+				tmp[j] = this.list[i];
 				++j;
 			}
 		}
-		l[j] = tmp;
-		
-		return (l);
+		this.list = Arrays.copyOf(tmp,tmp.length);
 	}
 	
+	public int indexOf(int elem){
+		for(int i = 0; i<this.list.length; ++i){
+			if(this.list[i] == elem)
+				return(i);
+		}
+		return -1;
+	}
+	
+	public void clear(){
+		this.list = new int[0];
+	}
+	
+	public int[] toArray(){
+		return this.list;
+	}
+	
+	public String toString(){
+		String s = "";
+		for(int i : this.list){
+			s += String.valueOf(i);
+		}
+		return s;
+	}
+	
+	/*public void concat(IntList fstList,IntList sndIntList){
+		//System.out.println(sndIntList.size());
+		int tmp[] = Arrays.copyOf(this.list, fstList.size() + sndIntList.size());
+		
+		for(int i = 0; i<tmp.length; ++i){
+			System.out.println(tmp[i]);
+		}
+	}*/
+	
+	public void concat(IntList sndList){
+		/*for(int i = 0; i<this.list.length; ++i){
+			System.out.println(this.list[i]);
+		}
+		System.out.println("||||");
+		sndList.printIt();*/
+		int[] tmp = new int[this.list.length + sndList.size()];
+		for(int i = 0; i<this.list.length; ++i){
+			tmp[i] = this.list[i];
+		}
+		
+		int j = this.list.length;
+		for(int i = 0; i<sndList.size(); ++i){
+			tmp[j] = sndList.get(i);
+			++j;
+		}
+		this.list = Arrays.copyOf(tmp, tmp.length);
+		/*for(int i : tmp){
+			System.out.println(i);
+		}*/
+	}
+	
+	/*public void concat(IntList fstList, IntList sndList){
+		fstList.printIt();
+		sndList.printIt();
+	}*/
+	
+	public void printIt(){
+		for(int i : this.list){
+			System.out.println(i);
+		}
+	}
+	
+	// TEST 
+	public static void main(String[] args){
+		myMain(new IntList(args));
+	}
+	
+	public static void myMain(IntList args){
+		//args.add(5);
+		//args.add(15, 4);
+		//System.out.println(args.get());
+		//System.out.println(args.get(4));
+		//args.set(32, 2);
+		//args.remove();
+		//args.remove(5);
+		//System.out.println(args.indexOf(2));
+		//args.clear();
+		//System.out.println(args.toArray()[5]);
+		//System.out.println(args.toString());
+		
+		//System.out.println("*****");
+		//String[] tmpIntList = {"21","22","23","24"};
+		//args.concat(new IntList(tmpIntList));
+		//args.printIt();
+	}
 }
