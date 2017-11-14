@@ -1,9 +1,10 @@
-import java.util.Arrays;
+import java.lang.*;
+import java.util.*;
 
 public class IntList{
 	
-	private int list [] = new int[0];
-	private int i;
+	private int[] list ;
+	private int idx;
 	
 	//KONSTRUKTOROK
 	public IntList (){
@@ -167,8 +168,28 @@ public class IntList{
 		}
 	}
 	
+	public Vector<String> fromString(String str){
+		int ewrythingIsAwesome = 0;
+		for(int i = 0; i<str.split(" ").length; ++i){
+			for(int j = 0; j<str.split(" ")[i].length(); ++j){
+				if(!Character.isDigit(str.split(" ")[i].charAt(j)))
+					ewrythingIsAwesome = 1;
+			}
+		}
+		
+		//System.out.println(ewrythingIsAwesome);
+		Vector<String> tmp = new Vector<>();
+		if(ewrythingIsAwesome == 0){
+			for(int i = 0; i<str.split(" ").length; ++i){
+				tmp.add(str.split(" ")[i]);
+			}
+		}
+		return null;
+	}
+	
 	// TEST 
 	public static void main(String[] args){
+		IntList ilist = new IntList(args);
 		myMain(new IntList(args));
 	}
 	
@@ -189,5 +210,7 @@ public class IntList{
 		//String[] tmpIntList = {"21","22","23","24"};
 		//args.concat(new IntList(tmpIntList));
 		//args.printIt();
+		//args.fromString("Alma a fa alatt nyari piros alma");
+		//args.fromString("1 2 0 3 4545 89899 565689 5689 5 2558 5a");
 	}
 }
